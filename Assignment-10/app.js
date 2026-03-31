@@ -1,3 +1,5 @@
+
+
 function currenttime() {
     const h1 = document.querySelector(".clock")
     const p = document.querySelector("#date")
@@ -123,6 +125,67 @@ function currenttime() {
 setInterval(currenttime, 1000)
 
 
+let minutes = 0;
+let seconds = 0;
+let milisec = 0;
+
+let interval;
+
+let swMinutes = document.getElementById("sw-minutes");
+let swSeconds = document.getElementById("sw-seconds");
+let swMilisec = document.getElementById("sw-milisec");
+
+let startBtn = document.getElementById("start-btn");
+let stopBtn = document.getElementById("stop-btn");
+let resetBtn = document.getElementById("reset-btn");
+
+function updateDisplay() {
+    swMinutes.innerText = String(minutes).padStart(2, "0");
+    swSeconds.innerText = String(seconds).padStart(2, "0");
+    swMilisec.innerText = String(milisec).padStart(2, "0");
+}
+
+function startStopwatch() {
+
+    if (interval) return;
+
+    interval = setInterval(function () {
+
+        milisec++;
+
+        if (milisec === 100) {
+            milisec = 0;
+            seconds++;
+        }
+
+        if (seconds === 60) {
+            seconds = 0;
+            minutes++;
+        }
+
+        // updateDisplay();
+
+    }, 10);
+
+}
+
+function stopStopwatch() {
+    clearInterval(interval);
+    interval = null;
+}
+
+function resetStopwatch() {
+
+    clearInterval(interval);
+    interval = null;
+
+    minutes = 0;
+    seconds = 0;
+    milisec = 0;
 
 
+}
 
+startBtn.addEventListener("click", startStopwatch);
+stopBtn.addEventListener("click", stopStopwatch);
+resetBtn.addEventListener("click", resetStopwatch);
